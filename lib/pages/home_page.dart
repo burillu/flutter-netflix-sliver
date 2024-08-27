@@ -38,6 +38,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           ...sections(),
+          footer(),
         ],
       );
 
@@ -45,24 +46,59 @@ class HomePage extends StatelessWidget {
         if (section.layoutMode == SliverLayoutMode.list) {
           return SliverList(
               delegate: SliverChildBuilderDelegate(
-            childCount: 2,
+            childCount: section.sectionModel.length,
             (context, index) {
               return Container(
+                padding: EdgeInsets.all(10),
                 width: double.infinity,
-                //height: 10,
-                color: Colors.red,
-                child: Text(section.sectionModel[index].label),
+                // height: 150,
+                child: Container(
+                  // color: Colors.black12,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        section.sectionModel[index].label,
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Sit cupidatat ut ea exercitation eu sit fugiat. Et aliquip sint nulla veniam nisi cillum officia cillum et enim id nulla. Ullamco amet cillum aute eiusmod ad incididunt elit aliqua sunt officia do.",
+                        style: TextStyle(
+                          color: Colors.white38,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           ));
         } else {
           return SliverGrid(
             delegate: SliverChildBuilderDelegate(
-                (context, index) => Text(section.sectionModel[index].label),
+                (context, index) => Center(
+                        //padding: EdgeInsets.all(10),
+                        child: Text(
+                      section.sectionModel[index].label,
+                      style: TextStyle(color: Colors.white38),
+                    )),
                 childCount: section.sectionModel.length),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, mainAxisSpacing: 5),
           );
         }
       }).toList();
+  Widget footer() => SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Text("Copyright protected to Netflix"),
+          ),
+        ),
+      );
 }
